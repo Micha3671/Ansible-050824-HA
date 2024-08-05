@@ -1,9 +1,9 @@
 ---
-- name: Use Ansible Vault
-  hosts: server
+- name: Read and display encrypted file
+  hosts: localhost
   vars_files:
-    - passwort.txt
-  tasks: 
-    - name: Show Password
+    - secrets.txt # Hier muss der Name der verschlüsselten Datei angegeben werden
+  tasks:
+    - name: Display the content of the encrypted file
       debug:
-        var: meinPasswort
+        msg: "The secret password is: {{ secretPasswort }}"
