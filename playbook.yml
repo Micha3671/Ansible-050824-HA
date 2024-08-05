@@ -1,26 +1,20 @@
 ---
-- name: Install Nginx on Amazon Linux
-  hosts: TestServer
+- name: Install Nginx on Amazon Linux 2
+  hosts: ec2-instances
   become: yes
   tasks:
+    - name: Update all packages to the latest version
+      yum:
+        name: "*"
+        state: latest
+
     - name: Ensure Nginx is installed
       yum:
         name: nginx
         state: present
-    - name: Ensure Git is installed
-      yum:
-        name: git
-        # update_cache: yes
-        state: present
-    - name: Check Git version
-      shell: git -v
-      register: git_version_output
-    
-    - name: Display Git Version
-      debug: 
-        var: git_version_output.stdout
-    
-    - name: Use Ansible Vault
 
-
-    
+    - name: Ensure Nginx is started and enabled at boot
+      service:
+        name: nginx
+        state: started
+        enabled: yes
